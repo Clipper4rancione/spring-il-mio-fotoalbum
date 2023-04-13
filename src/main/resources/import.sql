@@ -1,0 +1,2 @@
+INSERT INTO db_photos.photos (title, description, url, is_visible) VALUES('cane', 'è un cane', 'asdasdasdadsad.it', false);
+INSERT INTO db_photos.photos (title, description, url, is_visible) VALUES('gatto', 'è un gatto', 'asdasdasdadsad.it', true);
