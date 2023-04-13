@@ -2,6 +2,7 @@ package org.project.springfotoalbum.controller;
 
 import org.project.springfotoalbum.model.Photo;
 import org.project.springfotoalbum.repository.PhotoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +14,13 @@ import java.util.List;
 @RequestMapping("/photos")
 public class PhotoController {
 
+    @Autowired
     private PhotoRepository photoRepository;
 
     @GetMapping
     public String index(Model model) {
         List<Photo> photos = photoRepository.findAll();
-        model.addAttribute("list", photos);
+        model.addAttribute("photoList", photos);
         return "/photos/index";
     }
 
