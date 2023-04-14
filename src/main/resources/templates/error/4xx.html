@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="/fragments/resources :: head"></th:block>
+    <title>Error 4xx</title>
+</head>
+<body class="bg-danger">
+<div class="container">
+    <h1 class="text-center mt-5">OOPS CLIENT ERROR</h1>
+    <p class="text-center">
+        <a th:href="@{/}">Back to home</a>
+    </p>
+
+    <div th:if="${exception}">
+        <p th:text="${exception}"></p>
+        <p th:text="${trace}"></p>
+    </div>
+</div>
+
+</body>
+</html>
