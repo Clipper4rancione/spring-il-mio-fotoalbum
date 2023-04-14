@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="/fragments/resources :: head"></th:block>
+    <title>Photo Detail</title>
+</head>
+<body>
+<th:block th:replace="/fragments/navbar :: navbar('photos')"></th:block>
+<h1 class="text-center text-uppercase" th:text="*{photo.title}"></h1>
+<div class="container">
+
+</div>
+
+</body>
+</html>
