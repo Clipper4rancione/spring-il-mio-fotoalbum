@@ -6,8 +6,9 @@
 </head>
 <body>
 <th:block th:replace="/fragments/navbar :: navbar('photos')"></th:block>
-<h1 class="text-center">QUI CI SARÀ LA LISTA DELLE FOTO</h1>
+<h1 class="text-center">FOTO</h1>
 <div class="container">
+    <a th:href="@{/photos/create}" class="btn btn-success"> <i class="fa-solid fa-plus"></i> Add a Photo</a>
     <table class="table">
         <thead>
         <tr>

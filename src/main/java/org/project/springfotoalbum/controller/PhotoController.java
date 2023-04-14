@@ -41,6 +41,12 @@ public class PhotoController {
 
     }
 
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("photo", new Photo());
+        return "/photos/create";
+    }
+
     @GetMapping("/search")
     public String search(Model model, @RequestParam(name = "q") String keyword) {
         List<Photo> filteredPhotos = photoRepository.findByTitleContainingIgnoreCase(keyword);
