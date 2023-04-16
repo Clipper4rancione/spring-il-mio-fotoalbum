@@ -16,6 +16,19 @@ public class Photo {
     private String url;
     private boolean isVisible;
 
+
+    public Photo(Integer id, String title, String description, String url, boolean isVisible) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.url = url;
+        this.isVisible = isVisible;
+    }
+
+    public Photo() {
+        super();
+    }
+
     public Integer getId() {
         return id;
     }

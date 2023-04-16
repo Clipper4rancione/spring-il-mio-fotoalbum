@@ -8,7 +8,26 @@
 <th:block th:replace="/fragments/navbar :: navbar('photos')"></th:block>
 <h1 class="text-center text-uppercase">ADD NEW PHOTO</h1>
 <div class="container">
-    
+    <form id="photo-form" method="post" th:object="${photo}" th:action="@{/photos/create}"
+          class="row align-items-center justify-content-center mt-5">
+        <div class=" col-12 mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}">
+        </div>
+        <div class=" col-12 mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" th:field="*{description}" rows="3"></textarea>
+        </div>
+        <div class=" col-12 mb-3">
+            <label for="url" class="form-label">URL</label>
+            <input type="text" class="form-control" id="url" th:field="*{url}">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-success mr-2">ADD</button>
+            <a class="btn btn-danger" th:href="@{/photos}">BACK</a>
+        </div>
+
+    </form>
 </div>
 
 </body>
