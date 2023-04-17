@@ -1,11 +1,13 @@
 package org.project.springfotoalbum.controller;
 
+import jakarta.validation.Valid;
 import org.project.springfotoalbum.model.Photo;
 import org.project.springfotoalbum.repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -45,13 +47,19 @@ public class PhotoController {
     }
 
     @PostMapping("/create")
-    public String doCreate(@ModelAttribute("photo") Photo photoForm) {
-        Photo photoToPersist = new Photo();
-        photoToPersist.setTitle(photoForm.getTitle());
-        photoToPersist.setDescription(photoForm.getDescription());
-        photoToPersist.setUrl(photoForm.getUrl());
-        photoRepository.save(photoToPersist);
-        return "redirect:/photos";
+    public String doCreate(@Valid @ModelAttribute("photo") Photo photoForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/photos/create";
+        } else {
+            Photo photoToPersist = new Photo();
+            photoToPersist.setTitle(photoForm.getTitle());
+            photoToPersist.setDescription(photoForm.getDescription());
+            photoToPersist.setUrl(photoForm.getUrl());
+            photoRepository.save(photoToPersist);
+            return "redirect:/photos";
+        }
+
+
     }
 
     @GetMapping("/search")

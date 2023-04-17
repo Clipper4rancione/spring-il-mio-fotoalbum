@@ -1,6 +1,7 @@
 package org.project.springfotoalbum.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "photos")
@@ -10,9 +11,11 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty
     private String title;
     @Lob
     private String description;
+    @NotEmpty
     private String url;
     private boolean isVisible;
 
