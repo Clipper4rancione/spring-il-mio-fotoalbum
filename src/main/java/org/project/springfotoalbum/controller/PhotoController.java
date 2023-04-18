@@ -69,10 +69,27 @@ public class PhotoController {
 
     }
 
-    @GetMapping("/search")
-    public String search(Model model, @RequestParam(name = "q") String keyword) {
-        List<Photo> filteredPhotos = photoRepository.findByTitleContainingIgnoreCase(keyword);
-        model.addAttribute("photoList", filteredPhotos);
-        return "/photos/index";
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        try {
+            Photo photo = photoService.getById(id);
+            model.addAttribute("photo", photo);
+            return "/photos/edit";
+        } catch (PhotoNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Photo with id " + id + " not found");
+        }
+
     }
+
+    @PostMapping("/edit/{id}")
+    public String doEdit(@PathVariable Integer id) {
+        return "redirect:/photos";
+    }
+
+//    @GetMapping("/search")
+//    public String search(Model model, @RequestParam(name = "q") String keyword) {
+//        List<Photo> filteredPhotos = photoRepository.findByTitleContainingIgnoreCase(keyword);
+//        model.addAttribute("photoList", filteredPhotos);
+//        return "/photos/index";
+//    }
 }
