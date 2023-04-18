@@ -25,7 +25,13 @@
             <td th:text="*{description}"></td>
             <td></td>
             <td th:text="*{isVisible}"></td>
-            <td><a class="btn btn-primary btn-sm" th:href="@{|/photos/*{id}|}"><i class="fa-solid fa-eye"></i></a></td>
+            <td>
+                <a class="btn btn-primary btn-sm" th:href="@{|/photos/*{id}|}"><i class="fa-solid fa-eye"></i></a>
+                <a class="btn btn-primary btn-sm" th:href="@{|/photos/edit/*{id}|}"><i
+                        class="fa-solid fa-pencil"></i></a>
+                <a class="btn btn-danger btn-sm" th:href="@{|/photos/delete/*{id}|}"><i
+                        class="fa-solid fa-trash"></i></a>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -82,8 +82,29 @@ public class PhotoController {
     }
 
     @PostMapping("/edit/{id}")
-    public String doEdit(@PathVariable Integer id) {
-        return "redirect:/photos";
+    public String doEdit(@PathVariable Integer id, @ModelAttribute("photo") Photo photoForm) {
+        try {
+            Photo updatedPhoto = photoService.updatePhoto(photoForm, id);
+            return "redirect:/photos/" + Integer.toString(updatedPhoto.getId());
+        } catch (PhotoNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Photo with id " + id + " not found");
+        }
+
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        try {
+            boolean success = photoService.deleteById(id);
+            if (success) {
+                return "redirect:/photos";
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to delete photo wit id " + id);
+            }
+        } catch (PhotoNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        
     }
 
 //    @GetMapping("/search")

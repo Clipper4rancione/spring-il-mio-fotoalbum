@@ -24,6 +24,14 @@ public class PhotoService {
         return photoRepository.save(photoToPersist);
     }
 
+    public Photo updatePhoto(Photo photoForm, Integer id) throws PhotoNotFoundException {
+        Photo photoToUpdate = getById(id);
+        photoToUpdate.setTitle(photoForm.getTitle());
+        photoToUpdate.setDescription(photoForm.getDescription());
+        photoToUpdate.setUrl(photoForm.getUrl());
+        return photoRepository.save(photoToUpdate);
+    }
+
     public List<Photo> getAllPhotos() {
         return photoRepository.findAll(Sort.by("title"));
     }
@@ -38,6 +46,16 @@ public class PhotoService {
             return result.get();
         } else {
             throw new PhotoNotFoundException(Integer.toString(id));
+        }
+    }
+
+    public boolean deleteById(Integer id) throws PhotoNotFoundException {
+        photoRepository.findById(id).orElseThrow(() -> new PhotoNotFoundException(Integer.toString(id)));
+        try {
+            photoRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }
