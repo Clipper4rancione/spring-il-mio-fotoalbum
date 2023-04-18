@@ -1,8 +1,10 @@
 package org.project.springfotoalbum.controller;
 
 import jakarta.validation.Valid;
+import org.project.springfotoalbum.exceptions.PhotoNotFoundException;
 import org.project.springfotoalbum.model.Photo;
 import org.project.springfotoalbum.repository.PhotoRepository;
+import org.project.springfotoalbum.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,20 +23,29 @@ public class PhotoController {
     @Autowired
     private PhotoRepository photoRepository;
 
+    @Autowired
+    private PhotoService photoService;
+
     @GetMapping
-    public String index(Model model) {
+    public String index(Model model, @RequestParam(name = "q") Optional<String> keyword) {
         List<Photo> photos = photoRepository.findAll();
+        if (keyword.isEmpty()) {
+            photos = photoService.getAllPhotos();
+        } else {
+            photos = photoService.getFilteredPhotos(keyword.get());
+            model.addAttribute("keyword", keyword.get());
+        }
         model.addAttribute("photoList", photos);
         return "/photos/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model) {
-        Optional<Photo> result = photoRepository.findById(id);
-        if (result.isPresent()) {
-            model.addAttribute("photo", result.get());
+        try {
+            Photo photo = photoService.getById(id);
+            model.addAttribute("photo", photo);
             return "/photos/show";
-        } else {
+        } catch (PhotoNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Photo with id " + id + " not found");
         }
 
@@ -51,11 +62,7 @@ public class PhotoController {
         if (bindingResult.hasErrors()) {
             return "/photos/create";
         } else {
-            Photo photoToPersist = new Photo();
-            photoToPersist.setTitle(photoForm.getTitle());
-            photoToPersist.setDescription(photoForm.getDescription());
-            photoToPersist.setUrl(photoForm.getUrl());
-            photoRepository.save(photoToPersist);
+            photoService.createdPhoto(photoForm);
             return "redirect:/photos";
         }
 
