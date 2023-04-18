@@ -36,4 +36,11 @@ public class PhotoRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+    //CREATE FOTO
+    @PostMapping
+    public Photo create(@RequestBody Photo photo) {
+        return photoService.createdPhoto(photo);
+    }
+
 }
